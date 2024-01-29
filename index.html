@@ -4,20 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web components</title>
-    <script src="./toolTip.js"></script>
+    <script src="./modal.js"></script>
     <style>
-      div {
-        border: 1px solid yellow;
+      body {
+        padding: 0px;
+        margin: 0px;
+      }
+      main {
+        padding: 2rem;
+        font-family: sans-serif;
       }
     </style>
   </head>
   <body>
-    <template id="tooltip-template">
-      <span>(?) </span>
-    </template>
-    <h1>
-      Welcome to <my-tooltip text="my custom tooltip">web-component</my-tooltip>
-    </h1>
-    <h1>My custom <my-tooltip>element</my-tooltip></h1>
+    <my-modal>
+      <p slot="title">
+        With your confirmation you agree to pay the full amount
+      </p>
+    </my-modal>
+    <main>
+      <p>Please confirm you want to leave the page</p>
+      <button>Confirm</button>
+    </main>
+
+    <script>
+      const confirmButton = document.querySelector("button");
+      const modal = document.querySelector("my-modal");
+
+      modal.addEventListener("cancel", () => {
+        console.warn("Cancelling...");
+      });
+      modal.addEventListener("confirm", () => {
+        console.warn("confirming....");
+      });
+      confirmButton.addEventListener("click", () => {
+        console.warn("opene", modal.isOpen);
+        if (!modal.isOpen) {
+          modal.open();
+        }
+      });
+    </script>
   </body>
 </html>
